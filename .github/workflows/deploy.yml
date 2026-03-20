@@ -1,4 +1,4 @@
-name: Deploy Frontend to GitHub Pages & Backend to Render
+name: Deploy Frontend to GitHub Pages
 
 on:
   push:
@@ -32,18 +32,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./microjobs-frontend/dist
-
-  deploy-backend:
-    name: Deploy Backend to Render
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Deploy to Render
-        env:
-          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-        run: |
-          if [ -n "$RENDER_DEPLOY_HOOK_URL" ]; then
-            curl "$RENDER_DEPLOY_HOOK_URL"
-          fi
