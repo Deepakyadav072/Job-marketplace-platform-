@@ -1,0 +1,31 @@
+# Render service definition for Microjobs (backend + optional frontend)
+# Install Red Hat YAML extension in VS Code for schema validation and autocompletion
+# https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml
+
+services:
+  - type: web
+    name: microjobs-backend
+    env: node
+    plan: free
+    branch: main
+    region: oregon
+    buildCommand: cd microjobs-frontend/microjobs-backend && npm install
+    startCommand: cd microjobs-frontend/microjobs-backend && npm start
+    autoDeploy: true
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: PORT
+        value: "5000"
+
+# Optional: frontend static site deployment
+# Uncomment this block if you want to deploy frontend separately on Render as static site:
+#  - type: static
+#    name: microjobs-frontend
+#    branch: main
+#    region: oregon
+#    buildCommand: cd microjobs-frontend && npm install && npm run build
+#    publishPath: microjobs-frontend/dist
+#    autoDeploy: true
